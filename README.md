@@ -107,6 +107,7 @@ These steps only need to be done once after initialization.
 | Path in OpenBao | Key | Used by | Kubernetes Secret name |
 |---|---|---|---|
 | `kv/homelab/alertmanager` | `DISCORD_WEBHOOK_URL` | Alertmanager | `alertmanager-discord` |
+| `kv/homelab/argocd-notifications` | `DISCORD_WEBHOOK_URL` | ArgoCD Notifications | `argocd-notifications-secret` |
 
 ---
 
@@ -115,3 +116,4 @@ These steps only need to be done once after initialization.
 | Policy | Path | Role | Service Account | Namespace |
 |---|---|---|---|---|
 | `alertmanager` | `kv/data/homelab/alertmanager` | `alertmanager` | `alertmanager` | `monitoring` |
+| `argocd-notifications` | `kv/data/homelab/argocd-notifications` | `argocd-notifications` | `argocd-notifications-controller` | `argocd` |
