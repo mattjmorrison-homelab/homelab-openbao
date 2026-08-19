@@ -2,6 +2,17 @@ ui:
   enabled: true
   serviceType: ClusterIP
 
+injector:
+  # Pod anti-affinity (built into this chart) keeps two injector replicas
+  # off the same node; with only imac untainted, a RollingUpdate's surge
+  # pod has nowhere to land without this — it sits Pending forever instead
+  # of completing the rollout and settling back to 1 replica.
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: pi
+      effect: NoSchedule
+
 server:
   ingress:
     enabled: true
@@ -21,10 +32,18 @@ server:
         tls_disable = 1
         address = "[::]:8200"
         cluster_address = "[::]:8201"
+        telemetry {
+          unauthenticated_metrics_access = true
+        }
       }
 
       storage "file" {
         path = "/openbao/data"
+      }
+
+      telemetry {
+        prometheus_retention_time = "24h"
+        disable_hostname = true
       }
 
   authDelegator:
