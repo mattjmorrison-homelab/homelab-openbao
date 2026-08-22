@@ -3,7 +3,7 @@ set -eu
 
 apk add --no-cache curl jq >/dev/null
 
-URL="http://homelab-openbao.openbao.svc:8200/v1/sys/health"
+URL="http://k8s-openbao.openbao.svc:8200/v1/sys/health"
 BODY=$(mktemp)
 STATUS=$(curl -s -o "$BODY" -w "%{http_code}" "$URL")
 SEALED=$(jq -r '.sealed' "$BODY")
